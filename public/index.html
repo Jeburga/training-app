@@ -287,7 +287,7 @@ const TrainingApp = () => {
   const [currentView, setCurrentView] = useState('home');
   const [selectedDay, setSelectedDay] = useState(null);
   const [currentWeek, setCurrentWeek] = useState(1);
-    const [currentMicrocycle, setCurrentMicrocycle] = useState('microcycle1');
+  const [currentMicrocycle, setCurrentMicrocycle] = useState('microcycle1');
   const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
   const [tempWorkoutData, setTempWorkoutData] = useState({});
   const [workoutData, setWorkoutData] = useState({});
@@ -462,22 +462,20 @@ const TrainingApp = () => {
   const WorkoutScreen = ({ day }) => {
     const dayData = ROUTINE_DATA[currentMicrocycle].days[day];
     const weekData = ROUTINE_DATA[currentMicrocycle].weeks[currentWeek - 1];
-    const today = new Date().toISOString().split('T')[0];
-    const workoutKey = `${day}-${today}`;
+    const workoutKey = `${day}-${selectedDate}`;
     const currentWorkout = workoutData[workoutKey] || {};
 
     const updateExercise = (exerciseIndex, field, value) => {
-      const updated = {
-        ...workoutData,
+      setTempWorkoutData(prev => ({
+        ...prev,
         [workoutKey]: {
-          ...currentWorkout,
+          ...(prev[workoutKey] || {}),
           [exerciseIndex]: {
-            ...currentWorkout[exerciseIndex],
+            ...(prev[workoutKey]?.[exerciseIndex] || {}),
             [field]: value
           }
         }
-      };
-      saveWorkoutData(updated);
+      }));
     };
 
     const getExerciseName = (exerciseIndex) => {
@@ -493,12 +491,41 @@ const TrainingApp = () => {
             <h2>{dayData.name}</h2>
             <p className="focus-badge">{dayData.focus}</p>
             <p className="week-info">Semana {currentWeek} - {weekData.note}</p>
-          </div>
+          
+        <div style={{
+          background: 'rgba(255, 255, 255, 0.05)',
+          padding: '16px',
+          borderRadius: '12px',
+          marginBottom: '20px',
+          border: '1px solid rgba(255, 255, 255, 0.1)'
+        }}>
+          <label style={{display: 'block', marginBottom: '8px', color: '#8b8b9f', fontSize: '14px'}}>
+            📅 Fecha del entrenamiento:
+          </label>
+          <input
+            type="date"
+            value={selectedDate}
+            onChange={(e) => setSelectedDate(e.target.value)}
+            max={new Date().toISOString().split('T')[0]}
+            style={{
+              background: 'rgba(255, 255, 255, 0.1)',
+              border: '1px solid rgba(255, 255, 255, 0.2)',
+              color: 'white',
+              padding: '10px',
+              borderRadius: '8px',
+              fontSize: '16px',
+              width: '100%'
+            }}
+          />
+        </div>
+
+</div>
         </div>
 
         <div className="exercises-list">
           {dayData.exercises.map((exercise, idx) => {
-            const exerciseData = currentWorkout[idx] || { sets: [], notes: '' };
+            const tempWorkout = tempWorkoutData[workoutKey] || {};
+            const exerciseData = tempWorkout[idx] || currentWorkout[idx] || { sets: [], notes: '' };
             const targetSets = idx < 4 ? weekData.sets : 3;
             const currentName = getExerciseName(idx);
             const isReplaced = currentName !== exercise.name;
