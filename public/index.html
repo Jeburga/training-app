@@ -1754,11 +1754,11 @@ const TrainingApp = () => {
       `}</style>
 
       {selectedDay ? (
-        <WorkoutScreen day={selectedDay} />
+        WorkoutScreen({ day: selectedDay })
       ) : currentView === 'tracking' ? (
-        <TrackingScreen />
+        TrackingScreen()
       ) : (
-        <HomeScreen />
+        HomeScreen()
       )}
 
       <nav className="bottom-nav">
@@ -1790,7 +1790,7 @@ const TrainingApp = () => {
         </button>
       </nav>
 
-      <AlternativesModal />
+      {AlternativesModal()}
     </div>
   );
 };
