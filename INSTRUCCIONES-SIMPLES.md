@@ -75,7 +75,7 @@ git push -u origin main
 1. En Netlify, ve a **"Site settings"** → **"Environment variables"**
 2. Click **"Add a variable"**
 3. **Key**: `DATABASE_URL`
-4. **Value**: `postgresql://neondb_owner:npg_bzU7GRHId6EV@ep-super-term-apwbm7h4-pooler.c-7.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require`
+4. **Value**: `postgresql://neondb_owner:TU_CONNECTION_STRING_AQUI@ep-super-term-apwbm7h4-pooler.c-7.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require`
 5. Click **"Save"**
 6. Ve a **"Deploys"** y click **"Trigger deploy"** → **"Clear cache and deploy site"**
 
