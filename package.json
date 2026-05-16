@@ -1,0 +1,14 @@
+{
+  "name": "training-app-jesus",
+  "version": "2.0.0",
+  "description": "App de entrenamiento híbrido con base de datos Neon",
+  "scripts": {
+    "dev": "netlify dev"
+  },
+  "dependencies": {
+    "@neondatabase/serverless": "^0.9.0"
+  },
+  "devDependencies": {
+    "netlify-cli": "^17.0.0"
+  }
+}
