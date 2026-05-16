@@ -593,8 +593,38 @@ const TrainingApp = () => {
                   placeholder="Observaciones..."
                   value={exerciseData.notes}
                   onChange={(e) => updateExercise(idx, 'notes', e.target.value)}
-                  className="exercise-notes-input"
                 />
+
+                <button
+                  onClick={async () => {
+                    const exerciseTemp = tempWorkoutData[workoutKey]?.[idx];
+                    if (exerciseTemp) {
+                      const updated = {
+                        ...workoutData,
+                        [workoutKey]: {
+                          ...currentWorkout,
+                          [idx]: exerciseTemp
+                        }
+                      };
+                      await saveWorkoutData(updated);
+                      alert('✓ Ejercicio guardado');
+                    }
+                  }}
+                  style={{
+                    width: '100%',
+                    background: 'linear-gradient(135deg, #00d4ff 0%, #9333ea 100%)',
+                    border: 'none',
+                    color: 'white',
+                    padding: '12px',
+                    borderRadius: '10px',
+                    fontSize: '15px',
+                    fontWeight: '700',
+                    marginTop: '12px',
+                    cursor: 'pointer'
+                  }}
+                >
+                  💾 Guardar Ejercicio
+                </button>
               </div>
             );
           })}
